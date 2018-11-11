@@ -5,13 +5,17 @@
 非线性时间比较类排序：通过比较来决定元素间的相对次序，由于其时间复杂度不能突破O(nlogn)，因此称为非线性时间比较类排序。
 线性时间非比较类排序：不通过比较来决定元素间的相对次序，它可以突破基于比较排序的时间下界，以线性时间运行，因此称为线性时间非比较类排序。 
 ![image]( https://github.com/chengquan/Sort/blob/master/Picture/1.png)
+
 ##0.2 算法复杂度
+
 ![image]( https://github.com/chengquan/Sort/blob/master/Picture/2.png)
+
 ##0.3 相关概念
 稳定：如果a原本在b前面，而a=b，排序之后a仍然在b的前面。
 不稳定：如果a原本在b的前面，而a=b，排序之后 a 可能会出现在 b 的后面。
 时间复杂度：对排序数据的总的操作次数。反映当n变化时，操作次数呈现什么规律。
 空间复杂度：是指算法在计算机内执行时所需存储空间的度量，它也是数据规模n的函数。 
+
 1、冒泡排序（Bubble Sort）
 冒泡排序是一种简单的排序算法。它重复地走访过要排序的数列，一次比较两个元素，如果它们的顺序错误就把它们交换过来。走访数列的工作是重复地进行直到没有再需要交换，也就是说该数列已经排序完成。这个算法的名字由来是因为越小的元素会经由交换慢慢“浮”到数列的顶端。 
 1.1 算法描述
@@ -32,24 +36,8 @@ n个记录的直接选择排序可经过n-1趟直接选择排序得到有序结�
 •	n-1趟结束，数组有序化了。
 2.2 动图演示
 ![image]( https://github.com/chengquan/Sort/blob/master/Picture/4.gif)
-　　
 2.3 代码实现
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16	function selectionSort(arr) {
+	function selectionSort(arr) {
     var len = arr.length;
     var minIndex, temp;
     for (var i = 0; i < len - 1; i++) {
