@@ -10,7 +10,6 @@
 不稳定：如果a原本在b的前面，而a=b，排序之后 a 可能会出现在 b 的后面。
 时间复杂度：对排序数据的总的操作次数。反映当n变化时，操作次数呈现什么规律。
 空间复杂度：是指算法在计算机内执行时所需存储空间的度量，它也是数据规模n的函数。 
-
 ## 1、冒泡排序（Bubble Sort）
 冒泡排序是一种简单的排序算法。它重复地走访过要排序的数列，一次比较两个元素，如果它们的顺序错误就把它们交换过来。走访数列的工作是重复地进行直到没有再需要交换，也就是说该数列已经排序完成。这个算法的名字由来是因为越小的元素会经由交换慢慢“浮”到数列的顶端。 
 ### 算法描述
@@ -33,22 +32,7 @@ n个记录的直接选择排序可经过n-1趟直接选择排序得到有序结�
 ![image]( https://github.com/chengquan/Sort/blob/master/Picture/4.gif)
 　　
 ### 代码实现
-	function selectionSort(arr) {
-    var len = arr.length;
-    var minIndex, temp;
-    for (var i = 0; i < len - 1; i++) {
-        minIndex = i;
-        for (var j = i + 1; j < len; j++) {
-            if (arr[j] < arr[minIndex]) {    // 寻找最小的数
-                minIndex = j;                // 将最小数的索引保存
-            }
-        }
-        temp = arr[i];
-        arr[i] = arr[minIndex];
-        arr[minIndex] = temp;
-    }
-    return arr;
-} 
+查看sort.cpp文件
 ### 算法分析
 表现最稳定的排序算法之一，因为无论什么数据进去都是O(n2)的时间复杂度，所以用到它的时候，数据规模越小越好。唯一的好处可能就是不占用额外的内存空间了吧。理论上讲，选择排序可能也是平时排序一般人想到的最多的排序方法了吧。
 ## 3、插入排序（Insertion Sort）
@@ -64,20 +48,7 @@ n个记录的直接选择排序可经过n-1趟直接选择排序得到有序结�
 ### 动图演示
 ![image]( https://github.com/chengquan/Sort/blob/master/Picture/5.gif)
 ### 代码实现
-14	function insertionSort(arr) {
-    var len = arr.length;
-    var preIndex, current;
-    for (var i = 1; i < len; i++) {
-        preIndex = i - 1;
-        current = arr[i];
-        while (preIndex >= 0 && arr[preIndex] > current) {
-            arr[preIndex + 1] = arr[preIndex];
-            preIndex--;
-        }
-        arr[preIndex + 1] = current;
-    }
-    return arr;
-}
+查看sort.cpp文件
 ### 算法分析
 插入排序在实现上，通常采用in-place排序（即只需用到O(1)的额外空间的排序），因而在从后向前扫描过程中，需要反复把已排序元素逐步向后挪位，为最新元素提供插入空间。
 ## 4、希尔排序（Shell Sort）
@@ -90,24 +61,7 @@ n个记录的直接选择排序可经过n-1趟直接选择排序得到有序结�
 ### 动图演示
 ![image]( https://github.com/chengquan/Sort/blob/master/Picture/6.gif)
 ### 代码实现
-18	function shellSort(arr) {
-    var len = arr.length,
-        temp,
-        gap = 1;
-    while (gap < len / 3) {         // 动态定义间隔序列
-        gap = gap * 3 + 1;
-    }
-    for (gap; gap > 0; gap = Math.floor(gap / 3)) {
-        for (var i = gap; i < len; i++) {
-            temp = arr[i];
-            for (var j = i-gap; j > 0 && arr[j]> temp; j-=gap) {
-                arr[j + gap] = arr[j];
-            }
-            arr[j + gap] = temp;
-        }
-    }
-    return arr;
-}
+查看sort.cpp文件
 ### 算法分析
 希尔排序的核心在于间隔序列的设定。既可以提前设定好间隔序列，也可以动态的定义间隔序列。动态定义间隔序列的算法是《算法（第4版）》的合著者Robert Sedgewick提出的。　
 ## 5、归并排序（Merge Sort）
@@ -119,36 +73,7 @@ n个记录的直接选择排序可经过n-1趟直接选择排序得到有序结�
 ### 动图演示
 ![image]( https://github.com/chengquan/Sort/blob/master/Picture/7.gif)
 ### 代码实现
-30	function mergeSort(arr) { // 采用自上而下的递归方法
-    var len = arr.length;
-    if (len < 2) {
-        return arr;
-    }
-    var middle = Math.floor(len / 2),
-        left = arr.slice(0, middle),
-        right = arr.slice(middle);
-    return merge(mergeSort(left), mergeSort(right));
-}
- 
-function merge(left, right) {
-    var result = [];
- 
-    while (left.length>0 && right.length>0) {
-        if (left[0] <= right[0]) {
-            result.push(left.shift());
-        }else {
-            result.push(right.shift());
-        }
-    }
- 
-    while (left.length)
-        result.push(left.shift());
- 
-    while (right.length)
-        result.push(right.shift());
- 
-    return result;
-}
+查看sort.cpp文件
 ### 算法分析
 归并排序是一种稳定的排序方法。和选择排序一样，归并排序的性能不受输入数据的影响，但表现比选择排序好的多，因为始终都是O(nlogn）的时间复杂度。代价是需要额外的内存空间。
 ## 6、快速排序（Quick Sort）
@@ -162,38 +87,7 @@ function merge(left, right) {
 ![image]( https://github.com/chengquan/Sort/blob/master/Picture/8.gif)
  
 ### 代码实现
-32	function quickSort(arr, left, right) {
-    var len = arr.length,
-        partitionIndex,
-        left =typeof left !='number' ? 0 : left,
-        right =typeof right !='number' ? len - 1 : right;
- 
-    if (left < right) {
-        partitionIndex = partition(arr, left, right);
-        quickSort(arr, left, partitionIndex-1);
-        quickSort(arr, partitionIndex+1, right);
-    }
-    return arr;
-}
- 
-function partition(arr, left ,right) {    // 分区操作
-    var pivot = left,                     // 设定基准值（pivot）
-        index = pivot + 1;
-    for (var i = index; i <= right; i++) {
-        if (arr[i] < arr[pivot]) {
-            swap(arr, i, index);
-            index++;
-        }       
-    }
-    swap(arr, pivot, index - 1);
-    return index-1;
-}
- 
-function swap(arr, i, j) {
-    var temp = arr[i];
-    arr[i] = arr[j];
-    arr[j] = temp;
-}
+查看sort.cpp文件
 ## 7、堆排序（Heap Sort）
 堆排序（Heapsort）是指利用堆这种数据结构所设计的一种排序算法。堆积是一个近似完全二叉树的结构，并同时满足堆积的性质：即子结点的键值或索引总是小于（或者大于）它的父节点。
 ### 算法描述
@@ -204,50 +98,7 @@ function swap(arr, i, j) {
 ![image]( https://github.com/chengquan/Sort/blob/master/Picture/9.gif)
 
 ### 代码实现
-44	var len;   // 因为声明的多个函数都需要数据长度，所以把len设置成为全局变量
- 
-function buildMaxHeap(arr) {  // 建立大顶堆
-    len = arr.length;
-    for (var i = Math.floor(len/2); i >= 0; i--) {
-        heapify(arr, i);
-    }
-}
- 
-function heapify(arr, i) {    // 堆调整
-    var left = 2 * i + 1,
-        right = 2 * i + 2,
-        largest = i;
- 
-    if (left < len && arr[left] > arr[largest]) {
-        largest = left;
-    }
- 
-    if (right < len && arr[right] > arr[largest]) {
-        largest = right;
-    }
- 
-    if (largest != i) {
-        swap(arr, i, largest);
-        heapify(arr, largest);
-    }
-}
- 
-function swap(arr, i, j) {
-    var temp = arr[i];
-    arr[i] = arr[j];
-    arr[j] = temp;
-}
- 
-function heapSort(arr) {
-    buildMaxHeap(arr);
- 
-    for (var i = arr.length - 1; i > 0; i--) {
-        swap(arr, 0, i);
-        len--;
-        heapify(arr, 0);
-    }
-    return arr;
-}
+查看sort.cpp文件
 ## 8、计数排序（Counting Sort）
 计数排序不是基于比较的排序算法，其核心在于将输入的数据值转化为键存储在额外开辟的数组空间中。 作为一种线性时间复杂度的排序，计数排序要求输入的数据必须是有确定范围的整数。
 ### 算法描述
@@ -258,29 +109,7 @@ function heapSort(arr) {
 ### 动图演示
 ![image]( https://github.com/chengquan/Sort/blob/master/Picture/10.gif)
 ### 代码实现
-
-22	function countingSort(arr, maxValue) {
-    var bucket =new Array(maxValue + 1),
-        sortedIndex = 0;
-        arrLen = arr.length,
-        bucketLen = maxValue + 1;
- 
-    for (var i = 0; i < arrLen; i++) {
-        if (!bucket[arr[i]]) {
-            bucket[arr[i]] = 0;
-        }
-        bucket[arr[i]]++;
-    }
- 
-    for (var j = 0; j < bucketLen; j++) {
-        while(bucket[j] > 0) {
-            arr[sortedIndex++] = j;
-            bucket[j]--;
-        }
-    }
- 
-    return arr;
-}
+查看sort.cpp文件
 ### 算法分析
 计数排序是一个稳定的排序算法。当输入的元素是 n 个 0到 k 之间的整数时，时间复杂度是O(n+k)，空间复杂度也是O(n+k)，其排序速度快于任何比较排序算法。当k不是很大并且序列比较集中时，计数排序是一个很有效的排序算法。
 ## 9、桶排序（Bucket Sort）
@@ -293,46 +122,7 @@ function heapSort(arr) {
 ### 图片演示
 ![image]( https://github.com/chengquan/Sort/blob/master/Picture/11.png)
 ### 代码实现
-40	function bucketSort(arr, bucketSize) {
-    if (arr.length === 0) {
-      return arr;
-    }
- 
-    var i;
-    var minValue = arr[0];
-    var maxValue = arr[0];
-    for (i = 1; i < arr.length; i++) {
-      if (arr[i] < minValue) {
-          minValue = arr[i];               // 输入数据的最小值
-      }else if (arr[i] > maxValue) {
-          maxValue = arr[i];               // 输入数据的最大值
-      }
-    }
- 
-    // 桶的初始化
-    var DEFAULT_BUCKET_SIZE = 5;           // 设置桶的默认数量为5
-    bucketSize = bucketSize || DEFAULT_BUCKET_SIZE;
-    var bucketCount = Math.floor((maxValue - minValue) / bucketSize) + 1;  
-    var buckets =new Array(bucketCount);
-    for (i = 0; i < buckets.length; i++) {
-        buckets[i] = [];
-    }
- 
-    // 利用映射函数将数据分配到各个桶中
-    for (i = 0; i < arr.length; i++) {
-        buckets[Math.floor((arr[i] - minValue) / bucketSize)].push(arr[i]);
-    }
- 
-    arr.length = 0;
-    for (i = 0; i < buckets.length; i++) {
-        insertionSort(buckets[i]);                     // 对每个桶进行排序，这里使用了插入排序
-        for (var j = 0; j < buckets[i].length; j++) {
-            arr.push(buckets[i][j]);                     
-        }
-    }
- 
-    return arr;
-}
+查看sort.cpp文件
 ### 算法分析
 桶排序最好情况下使用线性时间O(n)，桶排序的时间复杂度，取决与对各个桶之间数据进行排序的时间复杂度，因为其它部分的时间复杂度都为O(n)。很显然，桶划分的越小，各个桶之间的数据越少，排序所用的时间也会越少。但相应的空间消耗就会增大。 
 ## 10、基数排序（Radix Sort）
@@ -344,31 +134,7 @@ function heapSort(arr) {
 ### 动图演示
 ![image]( https://github.com/chengquan/Sort/blob/master/Picture/12.gif)
 ### 代码实现
-	// LSD Radix Sort
-var counter = [];
-function radixSort(arr, maxDigit) {
-    var mod = 10;
-    var dev = 1;
-    for (var i = 0; i < maxDigit; i++, dev *= 10, mod *= 10) {
-        for(var j = 0; j < arr.length; j++) {
-            var bucket = parseInt((arr[j] % mod) / dev);
-            if(counter[bucket]==null) {
-                counter[bucket] = [];
-            }
-            counter[bucket].push(arr[j]);
-        }
-        var pos = 0;
-        for(var j = 0; j < counter.length; j++) {
-            var value =null;
-            if(counter[j]!=null) {
-                while ((value = counter[j].shift()) !=null) {
-                      arr[pos++] = value;
-                }
-          }
-        }
-    }
-    return arr;
-}
+查看sort.cpp文件
 ### 算法分析
 基数排序基于分别排序，分别收集，所以是稳定的。但基数排序的性能比桶排序要略差，每一次关键字的桶分配都需要O(n)的时间复杂度，而且分配之后得到新的关键字序列又需要O(n)的时间复杂度。假如待排数据可以分为d个关键字，则基数排序的时间复杂度将是O(d*2n) ，当然d要远远小于n，因此基本上还是线性级别的。
 基数排序的空间复杂度为O(n+k)，其中k为桶的数量。一般来说n>>k，因此额外空间需要大概n个左右。
